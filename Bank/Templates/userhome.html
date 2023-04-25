@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>User Home</title>
+    <script type="text/javascript" src="/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+      $("document").ready(function(){
+        $("#district").change(function(){
+          var d_id=$("#district").val();
+          $.ajax({
+            url:"{% url 'getbranch' %}",
+            data:{'branch':d_id},
+            success:function(data){
+              $("#branch").html(data)
+            }
+          });
+        });
+      });
+    </script>
+    <script type="text/javascript">
+  
+  function validation(){
+
+    var alpha=/^[a-z A-Z]+$/;
+    var num=/^[0-9]+$/;
+    var regex=/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+
+    var name=document.getElementById('Name');
+    var dob=document.getElementById('DOB')
+    var age=document.getElementById('Age');
+    var gender=document.myform.Gender;
+    var phone=document.getElementById('Phone');
+    var email=document.getElementById('Email');
+    var address=document.getElementById('Address')
+
+    var district=document.getElementById('district');
+    var branch=document.getElementById('branch');
+    var account=document.getElementById('Account')
+    var materials=document.getElementById('Materials')
+
+    if(name.value.length==0){
+        alert('Enter your name');
+        return false;
+      }
+    else if(!name.value.match(alpha)){
+          alert("Enter a valid name")
+          Name.focus();
+          return false;
+        }
+    else if(dob.value.length==0){
+          alert("Enter dob");
+          return false;
+        }
+    else if(age.value.length==0){
+          alert("Enter age");
+          return false;
+        }
+    else if(Gender[0].checked==false && Gender[1].checked==false){
+          alert('Select Gender');
+          return false;
+        }
+
+    else if(phone.value.length==0){
+          alert('Enter your phone number')
+          return false;
+        }
+    else if(!Phone.value.match(num)){
+          alert("enter a valid number");
+          Phone.focus();
+          return false;
+        }
+    else if(email.value.length==0){
+          alert('Enter the email')
+          return false;
+        }
+    else if(!email.value.match(regex)){
+          alert("Enter a valid email");
+          email.focus()
+          return false;
+        }
+    else if(address.value.length==0){
+          alert("Enter address");
+          return false;
+        }
+    else if(district.value.length==0){
+          alert('Select a district')
+          return false;
+        }
+    else if(branch.value.length==0){
+          alert('Select branch')
+          return false;
+        }
+    else if(account.value.length==0){
+          alert('Select account type')
+          return false;
+        }
+    else if(materials.value.length==0){
+          alert('Choose Materials provided')
+          return false;
+        }
+    else{
+          return true;
+            
+        }
+  }
+</script>
+  </head>
+  <body>
+      <div class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+        <a class="navbar-brand" href="/">MyBank</a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="btn btn-success" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+        </div>
+      </div>
+      <div class="container mt-5">
+      <button onclick="showForm()" class="btn btn-info">Show the form</button>
+    
+        <form id="formElement" style="display: none;" method="POST" action="{% url 'formAction' %}" enctype="multipart/form-data" name="myform">
+          {% csrf_token %}
+          <div class="container border">
+          <h2>Personal Form</h2>
+          <table>
+            <tr>
+              <th>Name:</th>
+              <td><input type="text" name="name" class="form-control" id="Name"></td>
+            </tr>
+            <tr>
+              <th>DOB:</th>
+              <td><input type="date" name="dob" class="form-control" id="DOB"></td>
+            </tr>
+            <tr>
+              <th>AGE:</th>
+              <td><input type="text" name="age" class="form-control" id="Age"></td>
+            </tr>
+            <tr>
+              <th>GENDER:</th>
+              <td><input type="radio" name="gender" class="form-check-input" value="male" id="Gender">Male
+                <input type="radio" name="gender" class="form-check-input" value="female" id="Gender">Female</td>
+            </tr>
+            <tr>
+              <th>Phone Number:</th>
+              <td><input type="text" name="phone" class="form-control" id="Phone"></td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td><input type="text" name="email" class="form-control" id="Email"></td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td><textarea class="form-control" name="address" id="Address"></textarea></td>
+            </tr>
+            <tr>
+              <th>District</th>
+              <td><select class="form-select" aria-label="Default select example" id="district" name="district">
+                  <option value="">--SELECT--</option>
+                  {% for v in views %}
+                  <option value="{{v.id}}">{{v.District}}</option>
+
+                  {% endfor %}
+              </select></td>
+              <th>Branch:</th>
+              <td><select name="branch" id="branch" class="form-select" name="branch">
+                <option value="">select</option>
+              </select>
+            </td>
+            </tr>
+            <tr>
+              <th>Account Type:</th>
+              <td>
+                  <select class="form-select" name="acc" id="Account">
+                    <option value="">--SELECT--</option>
+                    <option value="Current">Current</option>
+                    <option value="Savings account">Savings account</option>
+                    <option value="Salary account">Salary account</option>
+                    <option value="Fixed deposit account">Fixed deposit account</option>
+                    <option value="NRI accounts">NRI accounts</option>
+                    <option value="Recurring deposit account">Recurring deposit account
+                    </option>
+                    
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <th>Materials Provided:</th>
+              <td> 
+                <input class="form-check-input" type="checkbox" name="materials" value="Chequebook" id="Materials">Cheque Book
+              </td>
+              <td> 
+                <input class="form-check-input" type="checkbox" name="materials" value="Debitcard" id="Materials">Debit Card
+              </td>
+               <td> 
+                <input class="form-check-input" type="checkbox" name="materials" value="Creditcard" id="Materials">Credit Card
+              </td>
+              </tr>
+              <tr>
+              <td>
+                <input type="submit" value="SUBMIT" class="btn btn-primary" onclick="return validation()">
+              </td>
+          </table>
+          </form>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    function showForm() {
+        document.getElementById('formElement').style.display = 'block';
+    }
+</script>
+<footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1;position: fixed;bottom: 0; width: 100%; height: 5%;" >
+    <section
+             class="d-flex justify-content-between p-4 text-white"
+             style="background-color: #21D192"
+             >
+      <!-- Left -->
+      
+    </section>
+  </footer>
+</body>
+  {%if messages %}
+{%for msg in messages%}
+<script>
+  a=document.write("<div class='alert alert-success' role='alert'>Your application accepted ! goto home <a href='{% url 'userHome' %}'>Home</a></div>")
+    alert('{{msg}}')
+</script>
+{%endfor%}
+{%endif%}
+</html>

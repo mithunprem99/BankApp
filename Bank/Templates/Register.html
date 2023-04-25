@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>User Register</title>
+     <script type="text/javascript">
+  
+  function validation(){
+
+    var username=document.getElementById('Username');
+    var password=document.getElementById('Password');
+    var cpass=document.getElementById('Cpass');
+
+     if(username.value.length==0){
+        alert('Enter username');
+        return false;
+      }
+      else if(password.value.length==0){
+          alert("Enter password");
+          return false;
+        }
+      else if(cpass.value.length==0){
+          alert("ReEnter password");
+          return false;
+        }
+      else{
+          return true;
+        }
+    
+}
+  </script>
+  </head>
+  <body>
+<div class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+
+        <a class="navbar-brand" href='/'>MyBank</a>
+
+      </div>
+      </div>
+
+      <div class="container border mt-5" >
+        <h2 class="text-center ">Register Form</h2>
+        <form method="POST" action="{% url 'registerAction' %}"> 
+          {% csrf_token %}
+
+          <table>
+            <tr>
+              <th>Username:</th>
+              <td><input type="text" name="username" class="form-control" id="Username">
+            </tr>
+            <tr>
+              <th>Password:</th>
+              <td><input type="Password" name="password" class="form-control" id="Password">
+            </tr>
+             <tr>
+              <th>Confirm_Password:</th>
+              <td><input type="Password" name="cpassword" class="form-control" id="Cpass">
+            </tr>
+             <tr>
+              
+              <td><input type="submit" value="REGISTER" class="btn btn-success mt-5" onclick="return validation()"></td>
+
+            </tr>
+          </table>
+        </form>
+         
+             
+
+      </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<footer
+          class="text-center text-lg-start text-dark fixed-bottom"
+          style="background-color: #ECEFF1"
+          >
+  
+    <section
+             class="d-flex justify-content-between p-4 text-white"
+             style="background-color: #21D192"
+             >
+     
+   
+    </section>
+  </footer>
+  </body>
+  
+
+</html>
